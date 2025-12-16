@@ -1,0 +1,155 @@
+openapi: 3.0.0
+info:
+  title: Chatbot Backend API
+  description: API for connecting the chatbot UI with Qdrant and Gemini services
+  version: 1.0.0
+
+servers:
+  - url: http://localhost:8000
+    description: Local development server
+
+paths:
+  /api/chat/send:
+    post:
+      summary: Process user query and return AI response
+      description: Receives a user query, retrieves relevant information from Qdrant, generates a response using Gemini, and returns the result to the UI
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/QueryRequest'
+      responses:
+        '200':
+          description: Successful response with AI-generated answer
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QueryResponse'
+        '400':
+          description: Bad request - invalid input
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /api/health:
+    get:
+      summary: Health check endpoint
+      description: Returns the health status of the backend service
+      responses:
+        '200':
+          description: Service is healthy
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HealthResponse'
+
+components:
+  schemas:
+    QueryRequest:
+      type: object
+      required:
+        - query
+      properties:
+        query:
+          type: string
+          description: The user's question/query
+          example: "What is reinforcement learning?"
+        conversation_id:
+          type: string
+          description: Optional conversation ID for maintaining context
+          example: "conv_12345"
+
+    QueryResponse:
+      type: object
+      required:
+        - response
+        - sources
+        - conversation_id
+        - success
+      properties:
+        response:
+          type: string
+          description: The AI-generated response
+          example: "Reinforcement learning is a type of machine learning where an agent learns to make decisions by taking actions in an environment to maximize cumulative reward..."
+        sources:
+          type: array
+          items:
+            $ref: '#/components/schemas/SourceDocument'
+          description: List of source documents used in the response
+        conversation_id:
+          type: string
+          description: Conversation ID for maintaining context
+          example: "conv_12345"
+        success:
+          type: boolean
+          description: Whether the query was processed successfully
+          example: true
+        error:
+          type: string
+          description: Optional error message if query failed
+          example: "Error processing query"
+
+    SourceDocument:
+      type: object
+      required:
+        - title
+        - url
+        - content
+        - score
+      properties:
+        title:
+          type: string
+          description: Title of the source document
+          example: "Introduction to Machine Learning"
+        url:
+          type: string
+          description: URL of the source document
+          example: "https://example.com/ml-intro"
+        content:
+          type: string
+          description: Relevant content snippet from the source
+          example: "Machine learning is a method of data analysis that automates analytical model building..."
+        score:
+          type: number
+          format: float
+          description: Relevance score from vector search
+          example: 0.85
+
+    ErrorResponse:
+      type: object
+      required:
+        - error
+        - success
+      properties:
+        error:
+          type: string
+          description: Error message
+          example: "Invalid request parameters"
+        success:
+          type: boolean
+          description: Whether the request was successful (always false for error responses)
+          example: false
+
+    HealthResponse:
+      type: object
+      required:
+        - status
+        - timestamp
+      properties:
+        status:
+          type: string
+          description: Health status of the service
+          example: "healthy"
+        timestamp:
+          type: string
+          format: date-time
+          description: Timestamp of the health check
+          example: "2025-12-15T10:30:00Z"

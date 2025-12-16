@@ -1,8 +1,0 @@
-Created a new feature specification for "The Robotic Nervous System (ROS 2)" under branch `001-ros2-nervous-system`.
-
-The specification file is located at: `specs/001-ros2-nervous-system/spec.md`
-The quality checklist file is located at: `specs/001-ros2-nervous-system/checklists/requirements.md`
-
-All requirements in the checklist have been validated and marked as complete. This feature is now ready for the planning phase (`/sp.plan`).
-
-A Prompt History Record has been created at: `history/prompts/001-ros2-nervous-system/1-create-ros2-nervous-system-spec.spec.prompt.md`

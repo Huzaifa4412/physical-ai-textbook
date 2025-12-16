@@ -100,6 +100,18 @@
 - **[Entity 1]**: [What it represents, key attributes without implementation]
 - **[Entity 2]**: [What it represents, relationships to other entities]
 
+## Constitution Alignment *(mandatory)*
+
+<!--
+  ACTION REQUIRED: Review the project constitution at .specify/memory/constitution.md.
+  Identify any core principles that directly apply to this feature.
+  For each applicable principle, confirm that the requirements and user stories
+  defined in this specification are in full compliance.
+-->
+
+- **[PRINCIPLE_NAME]**: [Confirm compliance or explain any necessary deviations. E.g., "Principle 5: Retrieval Fidelity - This spec adheres to all rules regarding data sources, models, and operational constraints for the RAG system."]
+- **[PRINCIPLE_NAME]**: [Confirm compliance.]
+
 ## Success Criteria *(mandatory)*
 
 <!--

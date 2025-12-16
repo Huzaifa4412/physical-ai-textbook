@@ -1,0 +1,327 @@
+openapi: 3.0.0
+info:
+  title: Physical AI Textbook Chatbot API
+  description: API for the RAG-based chatbot system that provides Q&A functionality based on Physical AI Textbook content
+  version: 1.0.0
+
+servers:
+  - url: https://api.physical-ai-textbook.com
+    description: Production server
+
+paths:
+  /api/chat/send:
+    post:
+      summary: Send a message to the chatbot
+      description: Process user message and return AI-generated response based on textbook content
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                message:
+                  type: string
+                  description: The user's message/query
+                  example: "Explain the concept of reinforcement learning in robotics"
+                conversationId:
+                  type: string
+                  description: Optional conversation ID to continue existing conversation
+                  example: "conv_12345"
+                metadata:
+                  type: object
+                  description: Additional metadata for the request
+              required:
+                - message
+      responses:
+        '200':
+          description: Successful response with AI-generated answer
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  conversationId:
+                    type: string
+                    description: The conversation ID
+                    example: "conv_12345"
+                  response:
+                    type: string
+                    description: The AI-generated response
+                    example: "Reinforcement learning in robotics is a type of machine learning where..."
+                  sources:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        url:
+                          type: string
+                          description: Source URL for the information
+                        title:
+                          type: string
+                          description: Title of the source page
+                        snippet:
+                          type: string
+                          description: Relevant snippet from the source
+                  timestamp:
+                    type: string
+                    format: date-time
+                    description: When the response was generated
+        '400':
+          description: Bad request - invalid input
+        '500':
+          description: Internal server error
+
+  /api/chat/history:
+    get:
+      summary: Get conversation history
+      description: Retrieve the message history for a specific conversation
+      parameters:
+        - name: conversationId
+          in: query
+          required: true
+          schema:
+            type: string
+          description: The conversation ID to retrieve history for
+        - name: limit
+          in: query
+          required: false
+          schema:
+            type: integer
+            default: 20
+          description: Maximum number of messages to return
+      responses:
+        '200':
+          description: Conversation history retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  conversationId:
+                    type: string
+                    description: The conversation ID
+                  messages:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          description: Message ID
+                        sender:
+                          type: string
+                          enum: [user, assistant]
+                          description: Who sent the message
+                        content:
+                          type: string
+                          description: Message content
+                        timestamp:
+                          type: string
+                          format: date-time
+                          description: When the message was sent
+                  total:
+                    type: integer
+                    description: Total number of messages in conversation
+        '400':
+          description: Bad request - invalid conversation ID
+        '404':
+          description: Conversation not found
+        '500':
+          description: Internal server error
+
+  /api/chat/clear:
+    delete:
+      summary: Clear conversation history
+      description: Clear the conversation history for a specific conversation
+      parameters:
+        - name: conversationId
+          in: query
+          required: true
+          schema:
+            type: string
+          description: The conversation ID to clear
+      responses:
+        '200':
+          description: Conversation cleared successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    description: Whether the operation was successful
+                  message:
+                    type: string
+                    description: Status message
+        '400':
+          description: Bad request - invalid conversation ID
+        '500':
+          description: Internal server error
+
+  /api/content/refresh:
+    post:
+      summary: Refresh content from sitemap
+      description: Trigger content extraction and embedding from the textbook sitemap
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                force:
+                  type: boolean
+                  description: Whether to force refresh even if content is recent
+                  default: false
+      responses:
+        '200':
+          description: Content refresh initiated successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    description: Whether the operation was successful
+                  jobId:
+                    type: string
+                    description: ID of the refresh job for tracking
+                  message:
+                    type: string
+                    description: Status message
+        '500':
+          description: Internal server error
+
+  /api/content/status:
+    get:
+      summary: Get content indexing status
+      description: Retrieve the status of content indexing and statistics
+      responses:
+        '200':
+          description: Content status retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  totalDocuments:
+                    type: integer
+                    description: Total number of indexed documents
+                  totalChunks:
+                    type: integer
+                    description: Total number of content chunks
+                  lastIndexed:
+                    type: string
+                    format: date-time
+                    description: When content was last indexed
+                  status:
+                    type: string
+                    enum: [idle, indexing, error]
+                    description: Current indexing status
+                  progress:
+                    type: number
+                    format: float
+                    description: Progress of current indexing job (0-1)
+        '500':
+          description: Internal server error
+
+  /api/content/search:
+    post:
+      summary: Search indexed content
+      description: Direct search of indexed textbook content
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                query:
+                  type: string
+                  description: Search query
+                  example: "neural networks in robotics"
+                limit:
+                  type: integer
+                  default: 5
+                  description: Maximum number of results to return
+                filters:
+                  type: object
+                  description: Additional filters for search
+              required:
+                - query
+      responses:
+        '200':
+          description: Search results returned successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  results:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          description: Content chunk ID
+                        sourceUrl:
+                          type: string
+                          description: URL of source content
+                        title:
+                          type: string
+                          description: Title of source page
+                        content:
+                          type: string
+                          description: Content snippet
+                        score:
+                          type: number
+                          format: float
+                          description: Relevance score
+                  query:
+                    type: string
+                    description: The original search query
+                  totalResults:
+                    type: integer
+                    description: Total number of results available
+        '400':
+          description: Bad request - invalid query
+        '500':
+          description: Internal server error
+
+  /api/health:
+    get:
+      summary: Health check
+      description: Check the health status of the API
+      responses:
+        '200':
+          description: API is healthy
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    enum: [healthy]
+                    description: Health status
+                  timestamp:
+                    type: string
+                    format: date-time
+                    description: When the check was performed
+                  services:
+                    type: object
+                    properties:
+                      database:
+                        type: string
+                        enum: [up, down]
+                      ai_service:
+                        type: string
+                        enum: [up, down]
+                      vector_db:
+                        type: string
+                        enum: [up, down]
+        '503':
+          description: Service unavailable

@@ -1,100 +1,105 @@
 <!--
-- Version change: 0.1.0 -> 1.0.0
-- List of modified principles:
-  - PRINCIPLE_1_NAME -> Accuracy
-  - PRINCIPLE_2_NAME -> Clarity
-  - PRINCIPLE_3_NAME -> Reproducibility
-  - NEW: Rigor
-- Added sections:
-  - Principle 4: Rigor
-- Removed sections:
-  - Principle 5
-- Templates requiring updates:
-  - .specify/templates/plan-template.md (✅ updated)
-  - .specify/templates/spec-template.md (✅ updated)
-  - .specify/templates/tasks-template.md (✅ updated)
-- Follow-up TODOs: None
+[SYNC_IMPACT_REPORT_START]
+Version change: 1.1.0 -> 1.2.0
+Modified principles:
+  - Principle 1: Accuracy and Verifiability (updated Rule 1.1 to remove Context7)
+Added sections:
+  - Principle 5: Retrieval Fidelity
+Removed sections: None
+Templates requiring updates:
+  - [ ] .specify/templates/spec-template.md
+  - [ ] .specify/templates/plan-template.md
+Follow-up TODOs:
+  - TODO(RATIFICATION_DATE): Set the initial ratification date of the constitution.
+[SYNC_IMPACT_REPORT_END]
 -->
+# Physical AI Textbook Constitution
 
-# Book on Physical AI & Humanoid Robotics Constitution
+| Version | Ratification Date | Last Amended | Status |
+|---|---|---|---|
+| 1.2.0 | [RATIFICATION_DATE] | 2025-12-08 | Active |
 
-## Core Principles
+## I. Preamble
 
-### Principle 1: Accuracy
+This constitution establishes the foundational principles, architectural standards, and operational mandates governing the **Physical AI Textbook**. Its purpose is to ensure all development artifacts—from specifications to code—are accurate, clear, reproducible, and rigorously engineered. Adherence to this document is mandatory for all contributors and automated agents.
 
-**Rule:** All technical claims, code examples, and instructional steps MUST be verified against primary sources, including official documentation (e.g., ROS 2, Gazebo, NVIDIA Isaac, Unity) and peer-reviewed publications.
+## II. Core Principles
 
-**Rationale:** The credibility of this textbook rests on the correctness of its information. Readers, including students and professionals, rely on this material for their learning and work. Any inaccuracy can lead to significant errors in their projects and a loss of trust in this resource.
+### Principle 1: Accuracy and Verifiability
 
-### Principle 2: Clarity
+**Core Rule:** Every statement, code snippet, and architectural decision MUST be grounded in verifiable, up-to-date sources. Claims about system behavior MUST be backed by executable tests or references to authoritative documentation.
 
-**Rule:** Content MUST be written for a technical audience, specifically students and professionals in robotics and AI, targeting a Flesch-Kincaid grade level of 10-12. All concepts, examples, and instructions MUST be explained in a clear, direct, and unambiguous manner.
+- **1.1 Source Priority:** Authoritative sources include official documentation, peer-reviewed papers, or stable source code.
+- **1.2 Fact-Checking:** Automated information retrieval (e.g., RAG) MUST be aggressively fact-checked against trusted sources. Unverified or ambiguous information MUST be flagged.
+- **1.3 Test-Driven Claims:** Any assertion about code behavior (e.g., "this function is idempotent") MUST be accompanied by a test case that proves it.
 
-**Rationale:** The primary goal is education. Complex topics must be made accessible without sacrificing technical depth. This ensures the material is understandable to its target audience, facilitating effective learning.
+**Rationale:** The project's credibility depends on the complete accuracy of its content. This principle prevents the propagation of misinformation, outdated practices, and "hallucinated" facts from AI agents.
 
-### Principle 3: Reproducibility
+### Principle 2: Clarity and Plain Language
 
-**Rule:** All code, simulations, and setup instructions provided in the book MUST be fully reproducible. This includes providing versioned dependencies, environment configurations, and step-by-step guides that have been tested and confirmed to work.
+**Core Rule:** All generated text, from user-facing documentation to internal specifications, MUST be clear, concise, and accessible to a target audience with a moderate technical background.
 
-**Rationale:** To bridge the gap between theory and practice, readers must be able to replicate the results and experiments shown in the book. This hands-on experience is critical for genuine understanding and skill development in physical AI.
+- **2.1 Simplicity Over Jargon:** Avoid esoteric jargon. If a complex term is necessary, it MUST be defined in a glossary or at its first use. All outputs MUST be suitable for a professional setting.
+- **2.2 Structured Content:** Use headings, lists, and tables to structure information logically. Long paragraphs are discouraged.
+- **2.3 Action-Oriented Language:** Instructions and tasks MUST be phrased as clear, actionable commands (e.g., "Run the `setup.sh` script," not "You might want to run the script").
 
-### Principle 4: Rigor
+**Rationale:** Clarity reduces ambiguity, minimizes the risk of misinterpretation, and makes the project's outputs immediately useful to a broader audience.
 
-**Rule:** The material MUST be grounded in academic and professional rigor. At least 50% of the sources used MUST be peer-reviewed articles, official technical documentation, or formal whitepapers. All sources MUST be cited using APA style.
+### Principle 3: Reproducibility and Automation
 
-**Rationale:** Rigorous sourcing ensures the content is reliable, up-to-date, and reflects the state-of-the-art in the field. It provides a strong foundation for the book's claims and directs readers to further high-quality information.
+**Core Rule:** Every process, from setting up a development environment to running a final build, MUST be automated and reproducible. "It works on my machine" is not an acceptable state.
 
-## Key Standards
+- **3.1 Scripted Everything:** All setup, testing, and deployment procedures MUST be codified in scripts (e.g., shell, PowerShell, Dockerfile).
+- **3.2 Idempotent Operations:** Scripts and automated processes MUST be idempotent. Running a process multiple times should not produce errors or unintended side effects.
+- **3.3 Pinned Dependencies:** All external dependencies (libraries, tools, base images) MUST be pinned to specific, known-good versions.
 
--   **Traceability:** All factual claims must be traceable to official documentation or peer-reviewed articles.
--   **Citation Format:** All sources MUST be cited using APA style.
--   **Source Quality:** A minimum of 50% of sources must be from peer-reviewed articles, official documentation, and technical whitepapers.
--   **Plagiarism:** There is a zero-tolerance policy for plagiarism. All content must pass a plagiarism check before publication.
--   **Writing Clarity:** Content must target a Flesch-Kincaid grade level of 10-12 to ensure it is accessible to the intended technical audience.
--   **Publishing Format:** All content MUST be authored in Markdown and published using Docusaurus to ensure consistent formatting and citation embedding.
+**Rationale:** Automation guarantees consistency, eliminates manual error, and enables reliable, repeatable outcomes for all users and contributors.
 
-## Constraints
+### Principle 4: Architectural Rigor
 
--   **Length:** The book's total word count must be between 50,000 and 70,000 words.
--   **Source Count:** A minimum of 30 unique, high-quality sources must be cited.
--   **Output Format:** The primary deliverable is a Docusaurus-generated static website, with a secondary, downloadable PDF version.
+**Core Rule:** The system's architecture MUST be explicitly defined, consistently applied, and resilient to change. "Ad-hoc" or unplanned architectural changes are forbidden.
 
-## Success Criteria
+- **4.1 Spec-Driven Development:** All feature work MUST begin with a formal specification (`spec.md`) that defines scope, interfaces, and non-functional requirements. No code is written before a spec is approved.
+- **4.2 Modular and Decoupled:** The system MUST be composed of modular, loosely-coupled components with well-defined interfaces. This is tracked in `plan.md` and enforced via code reviews and ADRs.
+- **4.3 Traceability:** Every line of code MUST be traceable back to a specific task (`tasks.md`) and requirement (`spec.md`). Commits MUST reference the associated task ID.
 
--   **Verification:** All technical claims are successfully verified against primary sources.
--   **Originality:** Zero plagiarism is detected in the final manuscript.
--   **Reproducibility:** All code examples and simulation steps are confirmed to be reproducible by a third-party reviewer.
--   **Fact-Checking:** The manuscript successfully passes a technical fact-checking review by a qualified expert.
+**Rationale:** A rigorous architectural process ensures the system is maintainable, scalable, and easy to reason about over the long term.
 
-## Governance
+### Principle 5: Retrieval Fidelity
 
-This Constitution is the single source of truth for project principles and standards. It supersedes any conflicting guidance. Amendments require a documented proposal, review, and approval from the project lead. All development activities, including specification, planning, and implementation, MUST adhere to the principles outlined herein.
+**Core Rule:** The Retrieval-Augmented Generation (RAG) system MUST adhere to strict rules for sourcing, processing, and generating content to ensure relevance and accuracy.
 
-# --- Context7 Documentation Constitution ---
+- **5.1 Authoritative Corpus:** The RAG system MUST retrieve information *only* from Markdown (`.mdx`) files located within the `/docs/` directory of the project repository.
+- **5.2 Data Processing:** Content MUST be chunked at a maximum of 512 tokens. The chunking process MUST preserve the integrity of code blocks and YAML frontmatter.
+- **5.3 Vectorization and Storage:** Document chunks MUST be vectorized using the `text-embedding-3-small` model and.
+- **5.4 Generation Model:** The generative model for synthesizing answers MUST be Gemini, accessed via an `AsyncOpenAI` compatible client with the base URL `https://generativelanguage.googleapis.com/v1beta/openai/`.
+- **5.5 Citation Requirement:** At least 50% of all generated responses that rely on retrieved context MUST cite peer-reviewed sources referenced within the book's content.
+- **5.6 Operational Constraints:**
+    - The implementation MUST operate within the Free Gemini tier, respecting a limit of 15 Requests Per Minute (RPM).
+    - Multi-turn conversational context MUST NOT exceed 5,000 tokens.
+    - Retrieved document chunks MUST have a similarity score greater than 0.7 to be considered for generation.
+- **5.7 Success Metrics:**
+    - The system MUST achieve at least 95% accuracy in its answers when evaluated against the source book content.
+    - The system MUST produce zero hallucinations (i.e., fabricated facts or sources).
 
-rule: Always use the Context7 MCP documentation server
-description: The assistant must always query the Context7 MCP server to retrieve the most recent documentation before answering any question related to:
+**Rationale:** This principle establishes a tight operational envelope for the RAG chatbot to ensure its outputs are trustworthy, directly traceable to the project's knowledge base, and operate within defined technical and resource constraints.
 
--   the project’s codebase
--   APIs
--   schema
--   architecture
--   Docusaurus content
--   CLI commands
--   configuration files
+## III. Governance and Amendment
 
-rule: Prioritize authoritative sources
-description: When documentation exists both locally and on Context7 MCP, always treat the MCP version as the source of truth unless the user explicitly says otherwise.
+### 1. Versioning
 
-rule: Automatic doc retrieval
-description: When the user asks any project-related technical question, fetch the latest relevant documentation via the Context7 MCP server _before giving an answer_.
+This constitution follows a semantic versioning scheme:
+- **MAJOR (X.y.z):** Reserved for backward-incompatible changes, such as removing a core principle.
+- **MINOR (x.Y.z):** For adding new principles or significant, backward-compatible expansions of existing ones.
+- **PATCH (x.y.Z):** For clarifications, typo fixes, and non-substantive changes.
 
-rule: Do not hallucinate
-description: If no documentation exists in the MCP server for a requested topic, the assistant must state this clearly instead of fabricating content.
+### 2. Amendment Process
 
-rule: Keep answers aligned with Docusaurus
-description: When helping generate content for the Docusaurus book, always check the structure and content guidelines from the latest docs fetched via MCP to maintain consistency.
+Amendments can be proposed via a pull request against this file. The proposal MUST include:
+- A clear rationale for the change.
+- An updated version number in accordance with the versioning policy.
+- A review and explicit approval from at least two project maintainers.
 
-# --- End of Constitution ---
+### 3. Compliance
 
-**Version**: 1.0.0 | **Ratified**: 2025-12-07 | **Last Amended**: 2025-12-07
+All automated agents and human contributors are bound by the principles herein. Code or documentation that violates this constitution will be rejected during review. Regular audits will be conducted to ensure ongoing.

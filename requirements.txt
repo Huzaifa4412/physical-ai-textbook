@@ -1,0 +1,10 @@
+fastapi==0.115.*
+openai-agents==0.2.*
+qdrant-client==1.9.*
+chainlit==1.2.*
+python-dotenv==1.0.*
+tiktoken==0.8.*
+PyYAML==6.0.*
+pydantic==2.10.*
+uvicorn==0.32.*
+python-multipart==0.0.20

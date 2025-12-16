@@ -88,13 +88,13 @@ const config: Config = {
 					title: "Docs",
 					items: [
 						{
-							label: "Tutorial",
+							label: "Start Reading",
 							to: "docs/category/introduction",
 						},
 					],
 				},
 				{
-					title: "Community",
+					title: "Contact",
 					items: [
 						{
 							label: "Discord",
@@ -110,12 +110,12 @@ const config: Config = {
 					title: "More",
 					items: [
 						{
-							label: "Blog",
-							to: "/blog",
+							label: "Website",
+							to: "https://huzaifa-mukhtar-official.vercel.app/",
 						},
 						{
 							label: "GitHub",
-							href: "https://github.com/facebook/docusaurus",
+							href: "https://github.com/Huzaifa4412/physical-ai-textbook",
 						},
 					],
 				},
