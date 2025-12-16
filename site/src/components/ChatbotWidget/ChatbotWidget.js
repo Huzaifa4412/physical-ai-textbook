@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import './chat-widget.css';
 
-const API_URL = 'http://localhost:8000/chat';
+const API_URL = 'https://api-deployment-vercel-tau.vercel.app/chat';
 
 const ChatWidget = () => {
   const [isOpen, setIsOpen] = useState(false);
