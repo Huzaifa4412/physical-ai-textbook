@@ -9,11 +9,6 @@ const config: Config = {
 	tagline:
 		"Explore the future of robotics with our comprehensive course on Physical AI & Humanoid Robotics. Learn how AI systems bridge the digital and physical worlds, enabling humanoid robots to interact naturally in human environments. This book covers ROS 2, Gazebo, Unity, NVIDIA Isaac, and advanced AI integration, providing students and professionals with practical skills for the next generation of robotics.",
 	favicon: "img/favicon.ico",
-	metadata: [
-		{ rel: "icon", href: "img/favicon.ico" },
-		{ rel: "icon", href: "img/favicon.svg", type: "image/svg+xml" },
-		{ rel: "icon", href: "img/favicon.png", type: "image/png" },
-	],
 
 	// Future flags, see https://docusaurus.io/docs/api/docusaurus-config#future
 	future: {
