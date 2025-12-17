@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import './chat-widget.css';
 
-const API_URL = '/api/chat'; // Using the API contract specified in the requirements
+const API_URL = 'https://api-deployment-vercel-tau.vercel.app/chat'; // Using the API contract specified in the requirements
 
 const ChatWidget = () => {
   const [isOpen, setIsOpen] = useState(false);

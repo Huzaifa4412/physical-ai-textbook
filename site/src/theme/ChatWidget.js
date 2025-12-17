@@ -46,7 +46,7 @@ const ChatWidget = () => {
 
     try {
       // Call the backend API
-      const response = await fetch('/api/chat/send', {
+      const response = await fetch('https://api-deployment-vercel-tau.vercel.app/chat', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
