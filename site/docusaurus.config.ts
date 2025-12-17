@@ -167,14 +167,6 @@ const config: Config = {
 							label: "Docusaurus",
 							href: "https://docusaurus.io",
 						},
-						{
-							label: "Privacy Policy",
-							to: "/privacy",
-						},
-						{
-							label: "Terms of Service",
-							to: "/terms",
-						},
 					],
 				},
 			],
