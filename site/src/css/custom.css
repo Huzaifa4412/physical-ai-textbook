@@ -6,25 +6,163 @@
 
 /* You can override the default Infima variables here. */
 :root {
-  --ifm-color-primary: #2e8555;
-  --ifm-color-primary-dark: #29784c;
-  --ifm-color-primary-darker: #277148;
-  --ifm-color-primary-darkest: #205d3b;
-  --ifm-color-primary-light: #33925d;
-  --ifm-color-primary-lighter: #359962;
-  --ifm-color-primary-lightest: #3cad6e;
+  /* Dark theme colors (default) */
+  --ifm-color-background: #0b0e14; /* near-black background */
+  --ifm-color-surface: #111827; /* panels and containers */
+  --ifm-color-primary: #3b82f6; /* accent blue */
+  --ifm-color-primary-dark: #2563eb; /* accent hover */
+  --ifm-color-content: #e5e7eb; /* primary text */
+  --ifm-color-content-secondary: #9ca3af; /* secondary text */
+  --ifm-color-border: #1f2937; /* dividers and borders */
+  --ifm-color-emphasis-0: #0f172a; /* subtle backgrounds */
+  --ifm-color-emphasis-100: #1e293b;
+  --ifm-color-emphasis-200: #334155;
+  --ifm-color-emphasis-300: #475569;
+  --ifm-color-content-inverse: #1f2937; /* card backgrounds */
+
+  /* Typography */
+  --ifm-font-family-base: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, sans-serif;
+  --ifm-font-weight-heading: 600;
+  --ifm-line-height-base: 1.6;
+
+  /* Spacing */
+  --ifm-spacing-horizontal: 1.5rem;
+  --ifm-spacing-vertical: 1.5rem;
+
+  /* Max line length for readability */
+  --ifm-max-width: 70ch;
+
+  /* Original Docusaurus colors preserved for compatibility */
+  --ifm-color-primary: #3b82f6;
+  --ifm-color-primary-dark: #2563eb;
+  --ifm-color-primary-darker: #225dad;
+  --ifm-color-primary-darkest: #1d4d8c;
+  --ifm-color-primary-light: #539bf8;
+  --ifm-color-primary-lighter: #6aa5f9;
+  --ifm-color-primary-lightest: #81b0fa;
   --ifm-code-font-size: 95%;
   --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.1);
 }
 
-/* For readability concerns, you should choose a lighter palette in dark mode. */
+/* Light theme colors */
+[data-theme='light'] {
+  --ifm-color-background: #f8fafc; /* light gray background */
+  --ifm-color-surface: #ffffff; /* pure white panels */
+  --ifm-color-primary: #2563eb; /* blue primary */
+  --ifm-color-primary-dark: #1d43c1; /* darker blue */
+  --ifm-color-content: #1e293b; /* dark gray text */
+  --ifm-color-content-secondary: #64748b; /* medium gray text */
+  --ifm-color-border: #e2e8f0; /* light gray borders */
+  --ifm-color-emphasis-0: #f1f5f9; /* subtle backgrounds */
+  --ifm-color-emphasis-100: #e2e8f0;
+  --ifm-color-emphasis-200: #cbd5e1;
+  --ifm-color-emphasis-300: #94a3b8;
+  --ifm-color-content-inverse: #f1f5f9; /* card backgrounds */
+
+  /* Light theme specific overrides */
+  --ifm-color-primary-darker: #1e40af;
+  --ifm-color-primary-darkest: #172554;
+  --ifm-color-primary-light: #3b82f6;
+  --ifm-color-primary-lighter: #60a5fa;
+  --ifm-color-primary-lightest: #dbeafe;
+  --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.05);
+}
+
+/* Dark theme overrides */
 [data-theme='dark'] {
-  --ifm-color-primary: #25c2a0;
-  --ifm-color-primary-dark: #21af90;
-  --ifm-color-primary-darker: #1fa588;
-  --ifm-color-primary-darkest: #1a8870;
-  --ifm-color-primary-light: #29d5b0;
-  --ifm-color-primary-lighter: #32d8b4;
-  --ifm-color-primary-lightest: #4fddbf;
+  --ifm-color-primary: #3b82f6;
+  --ifm-color-primary-dark: #2563eb;
+  --ifm-color-primary-darker: #225dad;
+  --ifm-color-primary-darkest: #1d4d8c;
+  --ifm-color-primary-light: #539bf8;
+  --ifm-color-primary-lighter: #6aa5f9;
+  --ifm-color-primary-lightest: #81b0fa;
   --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.3);
+}
+
+/* Enhanced footer styles */
+.footer {
+  background: linear-gradient(135deg, var(--ifm-color-background) 0%, var(--ifm-color-emphasis-0) 100%);
+  border-top: 1px solid var(--ifm-color-border);
+  position: relative;
+  overflow: hidden;
+}
+
+.footer::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background:
+    radial-gradient(circle at 10% 20%, color-mix(in srgb, var(--ifm-color-primary) 10%, transparent) 0%, transparent 20%),
+    radial-gradient(circle at 90% 80%, color-mix(in srgb, var(--ifm-color-primary) 10%, transparent) 0%, transparent 20%);
+  z-index: 0;
+}
+
+.footer .container {
+  position: relative;
+  z-index: 1;
+}
+
+.footer__links {
+  padding: 3rem 0;
+  border-bottom: 1px solid var(--ifm-color-border);
+}
+
+.footer__col {
+  margin-bottom: 2rem;
+}
+
+.footer__title {
+  color: var(--ifm-color-content);
+  font-weight: 600;
+  margin-bottom: 1rem;
+  font-size: 1.1rem;
+}
+
+.footer__item {
+  margin-bottom: 0.5rem;
+}
+
+.footer__link {
+  color: var(--ifm-color-content-secondary);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.footer__link:hover {
+  color: var(--ifm-color-primary);
+  text-decoration: underline;
+}
+
+.footer__copyright {
+  padding: 1.5rem 0;
+  color: var(--ifm-color-content-secondary);
+  font-size: 0.875rem;
+  text-align: center;
+}
+
+/* Light theme specific footer improvements */
+[data-theme='light'] .footer__title {
+  color: #1e293b; /* Darker color for better visibility in light theme */
+}
+
+[data-theme='light'] .footer__link {
+  color: #475569; /* Darker secondary color for better visibility */
+}
+
+[data-theme='light'] .footer__copyright {
+  color: #64748b; /* Darker secondary color for better visibility */
+}
+
+@media (max-width: 996px) {
+  .footer__links {
+    padding: 2rem 0;
+  }
+
+  .footer__col {
+    margin-bottom: 2rem;
+  }
 }

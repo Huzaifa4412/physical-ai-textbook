@@ -1,0 +1,87 @@
+# Chatbot API Contract
+
+## Overview
+This document defines the API contract for the Physical AI Assistant chatbot functionality.
+
+## Endpoints
+
+### POST /api/chat
+Initiates a new chat session or continues an existing one with the Physical AI Assistant.
+
+#### Request
+```json
+{
+  "message": "How do humanoid robots handle perception in dynamic environments?",
+  "sessionId": "optional-session-id",
+  "metadata": {
+    "userType": "engineer",
+    "context": "physical-ai-book"
+  }
+}
+```
+
+#### Response
+```json
+{
+  "response": "Humanoid robots handle perception in dynamic environments through...",
+  "sessionId": "session-id",
+  "timestamp": "2025-12-17T10:30:00Z",
+  "sources": [
+    {
+      "title": "Perception Systems in Humanoid Robotics",
+      "page": 145,
+      "confidence": 0.85
+    }
+  ]
+}
+```
+
+#### Error Response
+```json
+{
+  "error": "Invalid request format",
+  "code": "INVALID_REQUEST",
+  "details": "Message field is required"
+}
+```
+
+### GET /api/chat/config
+Retrieves the configuration for the Physical AI Assistant.
+
+#### Response
+```json
+{
+  "title": "Physical AI Assistant",
+  "theme": {
+    "background": "#0b0e14",
+    "surface": "#111827",
+    "primaryText": "#e5e7eb",
+    "accent": "#3b82f6"
+  },
+  "behavior": {
+    "autoOpen": false,
+    "position": "bottom-right",
+    "tone": "calm, technical",
+    "emojiAllowed": false,
+    "animationsAllowed": false
+  }
+}
+```
+
+## Validation Rules
+
+### Request Validation
+- `message` field is required and must be between 1 and 1000 characters
+- `sessionId` must be a valid UUID if provided
+- `message` must be related to physical AI, humanoid robotics, perception, control, or systems
+
+### Response Validation
+- `response` field must be provided
+- `response` must be in a calm, technical tone without marketing language
+- `sources` array may be empty but must be present
+- Each source must have title, page, and confidence properties
+
+## Success Criteria
+- 95% accuracy in responses related to physical AI and humanoid robotics
+- Response time under 2 seconds
+- Zero hallucinations (fabricated facts or sources)

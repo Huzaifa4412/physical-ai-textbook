@@ -5,14 +5,244 @@
 
 .heroBanner {
   padding: 4rem 0;
-  text-align: center;
   position: relative;
   overflow: hidden;
+  background-color: var(--ifm-color-background);
+  color: var(--ifm-color-content);
 }
 
 @media screen and (max-width: 996px) {
   .heroBanner {
     padding: 2rem;
+  }
+}
+
+.heroContent {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+  max-width: var(--ifm-max-width);
+  margin: 0 auto;
+}
+
+.textContent {
+  flex: 1;
+  min-width: 0; /* Allows flex item to shrink below content size */
+}
+
+.heroTitle {
+  font-size: 2.5rem;
+  font-weight: var(--ifm-font-weight-heading);
+  color: var(--ifm-color-content);
+  margin-bottom: 1rem;
+  line-height: 1.2;
+}
+
+.heroSubtitle {
+  font-size: 1.2rem;
+  color: var(--ifm-color-content-secondary);
+  margin-bottom: 0.75rem;
+  line-height: 1.5;
+}
+
+.heroSupportingText {
+  font-size: 1rem;
+  color: var(--ifm-color-content-secondary);
+  margin-bottom: 1.5rem;
+  line-height: 1.4;
+}
+
+.heroButtons {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.illustration {
+  flex: 1;
+  min-width: 300px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.robotGeometry {
+  position: relative;
+  width: 200px;
+  height: 250px;
+  opacity: 0.3; /* Very low contrast as specified */
+}
+
+.body {
+  position: absolute;
+  top: 60px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80px;
+  height: 100px;
+  border: 1px solid var(--ifm-color-content-secondary);
+  border-radius: 8px;
+}
+
+.head {
+  position: absolute;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60px;
+  height: 60px;
+  border: 1px solid var(--ifm-color-content-secondary);
+  border-radius: 50%;
+}
+
+.arm {
+  position: absolute;
+  top: 70px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100px;
+  height: 8px;
+  background: var(--ifm-color-content-secondary);
+  border-radius: 4px;
+  transform-origin: center;
+}
+
+.arm:nth-child(1) {
+  transform: translateX(-50%) rotate(-20deg);
+  top: 70px;
+  width: 100px;
+}
+
+.arm:nth-child(2) {
+  transform: translateX(-50%) rotate(20deg);
+  top: 70px;
+  width: 100px;
+  left: calc(50% - 40px);
+}
+
+.leg {
+  position: absolute;
+  top: 160px;
+  width: 8px;
+  height: 80px;
+  background: var(--ifm-color-content-secondary);
+  border-radius: 4px;
+}
+
+.leg:first-child {
+  left: calc(50% - 15px);
+}
+
+.leg:last-child {
+  left: calc(50% + 7px);
+}
+
+.trustScopeSection {
+  padding: 4rem 0;
+  background-color: var(--ifm-color-background);
+  color: var(--ifm-color-content);
+}
+
+.sectionTitle {
+  font-size: 1.8rem;
+  font-weight: var(--ifm-font-weight-heading);
+  color: var(--ifm-color-content);
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.learningPath {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: 2rem 0;
+  padding: 1.5rem;
+  background-color: var(--ifm-color-surface);
+  border-radius: 8px;
+  border: 1px solid var(--ifm-color-border);
+}
+
+.pathStep {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 60px;
+}
+
+.pathNumber {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background-color: var(--ifm-color-primary);
+  color: white;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+
+.pathLabel {
+  font-size: 0.9rem;
+  color: var(--ifm-color-content);
+  text-align: center;
+}
+
+.pathArrow {
+  font-size: 1.2rem;
+  color: var(--ifm-color-content-secondary);
+}
+
+.detailedPath {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+.detailedItem h4 {
+  color: var(--ifm-color-content);
+  margin-bottom: 0.5rem;
+}
+
+.detailedItem p {
+  color: var(--ifm-color-content-secondary);
+  margin: 0;
+}
+
+@media screen and (max-width: 996px) {
+  .heroContent {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .heroButtons {
+    justify-content: center;
+  }
+
+  .illustration {
+    min-width: auto;
+    margin-top: 2rem;
+  }
+
+  .robotGeometry {
+    height: 150px;
+  }
+
+  .learningPath {
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .pathArrow {
+    transform: rotate(90deg);
+  }
+
+  .detailedPath {
+    grid-template-columns: 1fr;
   }
 }
 

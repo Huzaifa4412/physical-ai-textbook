@@ -1,11 +1,14 @@
-import React from 'react';
-import ChatbotWidget from '../components/ChatbotWidget';
+import React, { lazy, Suspense } from 'react';
+
+const ChatbotWidget = lazy(() => import('../components/ChatbotWidget'));
 
 const Root = ({ children }) => {
   return (
     <>
       {children}
-      <ChatbotWidget />
+      <Suspense fallback={null}>
+        <ChatbotWidget />
+      </Suspense>
     </>
   );
 };

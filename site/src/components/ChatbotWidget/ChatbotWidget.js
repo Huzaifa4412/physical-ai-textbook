@@ -1,20 +1,19 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { motion, AnimatePresence } from 'motion/react';
 import './chat-widget.css';
 
-const API_URL = 'https://api-deployment-vercel-tau.vercel.app/chat';
+const API_URL = '/api/chat'; // Using the API contract specified in the requirements
 
 const ChatWidget = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [inputMessage, setInputMessage] = useState('');
   const [messages, setMessages] = useState([
-    { sender: 'bot', text: 'Hello! How can I assist you today?' },
+    { sender: 'bot', text: 'Hello! I\'m your Physical AI Assistant. How can I help you understand humanoids, perception, control, and systems?' },
   ]);
 
   const messagesEndRef = useRef(null);
 
   useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    messagesEndRef.current?.scrollIntoView({ behavior: 'auto' });
   }, [messages]);
 
   const handleSendMessage = async (e) => {
@@ -29,86 +28,96 @@ const ChatWidget = () => {
       const res = await fetch(API_URL, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ question: userMessage.text }),
+        body: JSON.stringify({
+          message: userMessage.text,
+          metadata: {
+            userType: 'engineer',
+            context: 'physical-ai-book'
+          }
+        }),
       });
 
+      if (!res.ok) {
+        throw new Error(`HTTP error! status: ${res.status}`);
+      }
+
       const data = await res.json();
-      setMessages((prev) => [...prev, { sender: 'bot', text: data.answer }]);
-    } catch {
+      if (!data || !data.response) {
+        throw new Error('Invalid response format from server');
+      }
+
+      setMessages((prev) => [...prev, { sender: 'bot', text: data.response }]);
+    } catch (error) {
+      console.error('Chat error:', error);
       setMessages((prev) => [
         ...prev,
-        { sender: 'bot', text: 'Error: Could not reach server.' },
+        {
+          sender: 'bot',
+          text: 'Error: Could not reach the Physical AI Assistant service. Please try again later.'
+        },
       ]);
     }
   };
 
-  const chatVariants = {
-    closed: { opacity: 0, scale: 0.8, y: 50 },
-    open: {
-      opacity: 1,
-      scale: 1,
-      y: 0,
-      transition: { type: 'spring', stiffness: 400, damping: 30 },
-    },
-  };
-
   return (
     <div className="chat-container">
-      <AnimatePresence>
-        {isOpen && (
-          <motion.div
-            className="chat-window"
-            variants={chatVariants}
-            initial="closed"
-            animate="open"
-            exit="closed"
-          >
-            {/* Header */}
-            <div className="chat-header">
-              <h3>Support Chat</h3>
-              <button onClick={() => setIsOpen(false)}>✕</button>
-            </div>
+      {isOpen && (
+        <div className="chat-window" role="dialog" aria-modal="true" aria-labelledby="chat-header-title">
+          {/* Header */}
+          <div className="chat-header">
+            <h3 id="chat-header-title">Physical AI Assistant</h3>
+            <button
+              onClick={() => setIsOpen(false)}
+              aria-label="Close chat"
+              title="Close chat"
+            >
+              ✕
+            </button>
+          </div>
 
-            {/* Messages */}
-            <div className="chat-body">
-              {messages.map((msg, index) => (
+          {/* Messages */}
+          <div className="chat-body" role="log" aria-live="polite">
+            {messages.map((msg, index) => (
+              <div
+                key={index}
+                className={`message-row ${msg.sender}`}
+                role="listitem"
+              >
                 <div
-                  key={index}
-                  className={`message-row ${msg.sender}`}
+                  className={`message-bubble ${msg.sender}`}
+                  aria-label={`${msg.sender === 'bot' ? 'Assistant' : 'You'}: ${msg.text}`}
                 >
-                  <motion.div
-                    initial={{ opacity: 0, x: msg.sender === 'user' ? 40 : -40 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    className={`message-bubble ${msg.sender}`}
-                  >
-                    {msg.text}
-                  </motion.div>
+                  {msg.text}
                 </div>
-              ))}
-              <div ref={messagesEndRef} />
-            </div>
+              </div>
+            ))}
+            <div ref={messagesEndRef} />
+          </div>
 
-            {/* Input */}
-            <form className="chat-input" onSubmit={handleSendMessage}>
-              <input
-                value={inputMessage}
-                onChange={(e) => setInputMessage(e.target.value)}
-                placeholder="Type a message..."
-              />
-              <button type="submit">➤</button>
-            </form>
-          </motion.div>
-        )}
-      </AnimatePresence>
+          {/* Input */}
+          <form className="chat-input" onSubmit={handleSendMessage} role="form">
+            <input
+              value={inputMessage}
+              onChange={(e) => setInputMessage(e.target.value)}
+              placeholder="Ask about humanoids, perception, control, or systems..."
+              aria-label="Type your question for the Physical AI Assistant"
+              autoComplete="off"
+            />
+            <button type="submit" aria-label="Send message" title="Send message">➤</button>
+          </form>
+        </div>
+      )}
 
-      {/* Toggle Button */}
-      <motion.button
+      {/* Toggle Button - Floating button in bottom-right corner */}
+      <button
         className="chat-toggle"
         onClick={() => setIsOpen(!isOpen)}
-        animate={{ rotate: isOpen ? 90 : 0 }}
+        aria-label={isOpen ? "Close Physical AI Assistant" : "Open Physical AI Assistant"}
+        aria-expanded={isOpen}
+        aria-controls="chat-window"
       >
-        💬
-      </motion.button>
+        🤖
+      </button>
     </div>
   );
 };
