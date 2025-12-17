@@ -1,0 +1,47 @@
+/**
+ * Reusable CSS module for card styling
+ * Following the Physical AI & Humanoid UI specification
+ * Flat design with soft borders, no shadows
+ */
+
+.card {
+  background-color: var(--ifm-color-surface);
+  border: 1px solid var(--ifm-color-border);
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin: 0.5rem;
+  box-shadow: none;
+  transition: border-color 0.2s ease;
+}
+
+.card:hover {
+  border-color: var(--ifm-color-primary);
+}
+
+.cardTitle {
+  color: var(--ifm-color-content);
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  font-size: 1.1rem;
+}
+
+.cardDescription {
+  color: var(--ifm-color-content-secondary);
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+/* Responsive card grid */
+.cardGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1rem;
+  margin: 1.5rem 0;
+}
+
+/* Specific 3-column layout for desktop */
+@media (min-width: 997px) {
+  .cardGrid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}

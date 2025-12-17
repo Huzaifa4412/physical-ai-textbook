@@ -1,0 +1,26 @@
+/* Core Topics Section Styles for Physical AI & Humanoid Systems */
+
+.coreTopicsSection {
+  padding: 4rem 0;
+  background-color: var(--ifm-color-background);
+}
+
+.sectionTitle {
+  text-align: center;
+  font-size: 1.8rem;
+  font-weight: var(--ifm-font-weight-heading);
+  color: var(--ifm-color-content);
+  margin-bottom: 2rem;
+}
+
+/* Responsive adjustments */
+@media (max-width: 996px) {
+  .coreTopicsSection {
+    padding: 2rem 0;
+  }
+
+  .sectionTitle {
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+}

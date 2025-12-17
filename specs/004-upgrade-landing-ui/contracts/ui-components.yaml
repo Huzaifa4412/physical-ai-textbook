@@ -1,0 +1,160 @@
+# UI Component Contracts for Landing Page Upgrade
+
+## HeroSection Component
+description: "The hero section at the top of the landing page"
+props:
+  title:
+    type: string
+    required: true
+    example: "Physical AI & Humanoid Systems"
+  subtitle:
+    type: string
+    required: true
+    example: "embodied intelligence, robotics, real-world AI"
+  supportingText:
+    type: string
+    required: false
+    example: "robot brains → deployment"
+  primaryCta:
+    type: object
+    required: true
+    properties:
+      text:
+        type: string
+        example: "Start Reading"
+      url:
+        type: string
+        example: "/docs/category/introduction"
+  secondaryCta:
+    type: object
+    required: true
+    properties:
+      text:
+        type: string
+        example: "View Structure"
+      url:
+        type: string
+        example: "/docs/category/introduction"
+  className:
+    type: string
+    required: false
+    description: "Additional CSS classes to apply"
+
+## FeatureCard Component
+description: "Individual feature card in the features section"
+props:
+  title:
+    type: string
+    required: true
+    example: "Physical AI First"
+  description:
+    type: string
+    required: true
+    example: "Intelligence grounded in physics and embodiment"
+  icon:
+    type: string
+    required: false
+    example: "physics-icon"
+  className:
+    type: string
+    required: false
+    description: "Additional CSS classes to apply"
+
+## BentoGrid Component
+description: "Grid layout for core topics with bento-style arrangement"
+props:
+  items:
+    type: array
+    required: true
+    items:
+      type: object
+      properties:
+        title:
+          type: string
+          required: true
+        description:
+          type: string
+          required: false
+        icon:
+          type: string
+          required: false
+  className:
+    type: string
+    required: false
+    description: "Additional CSS classes to apply"
+
+## LearningPath Component
+description: "Visual representation of the learning progression"
+props:
+  items:
+    type: array
+    required: true
+    items:
+      type: object
+      properties:
+        title:
+          type: string
+          required: true
+        description:
+          type: string
+          required: false
+  className:
+    type: string
+    required: false
+    description: "Additional CSS classes to apply"
+
+## Navigation Component
+description: "Navigation bar with site title and links"
+props:
+  siteTitle:
+    type: string
+    required: true
+    example: "Physical AI & Humanoid Systems"
+  navigationItems:
+    type: array
+    required: true
+    items:
+      type: object
+      properties:
+        label:
+          type: string
+          required: true
+        url:
+          type: string
+          required: true
+        position:
+          type: string
+          required: false
+          enum: ["left", "right"]
+  className:
+    type: string
+    required: false
+    description: "Additional CSS classes to apply"
+
+## Footer Component
+description: "Footer with book information and links"
+props:
+  bookTitle:
+    type: string
+    required: true
+    example: "Physical AI & Humanoid Systems"
+  description:
+    type: string
+    required: true
+    example: "A comprehensive guide to Physical AI & Humanoid Robotics"
+  links:
+    type: array
+    required: true
+    items:
+      type: object
+      properties:
+        label:
+          type: string
+          required: true
+        url:
+          type: string
+          required: true
+  className:
+    type: string
+    required: false
+    description: "Additional CSS classes to apply"

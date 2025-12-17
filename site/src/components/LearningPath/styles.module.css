@@ -1,0 +1,176 @@
+/* Learning Path Section Styles for Physical AI & Humanoid Systems */
+
+.learningPathSection {
+  padding: 4rem 0;
+  background-color: var(--ifm-color-emphasis-0);
+}
+
+.sectionTitle {
+  text-align: center;
+  font-size: 1.8rem;
+  font-weight: var(--ifm-font-weight-heading);
+  color: var(--ifm-color-content);
+  margin-bottom: 3rem;
+}
+
+.pathContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.pathStep {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  width: 100%;
+  gap: 1rem;
+}
+
+.pathItem {
+  position: relative;
+  padding: 1.5rem;
+  background-color: var(--ifm-color-content-inverse);
+  border: 1px solid var(--ifm-color-emphasis-200);
+  border-radius: var(--ifm-global-radius);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.pathItem:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.stepNumber {
+  flex-shrink: 0;
+  width: 2.5rem;
+  height: 2.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--ifm-color-primary);
+  color: white;
+  border-radius: 50%;
+  font-weight: bold;
+  font-size: 1.1rem;
+  margin-top: 0.25rem;
+}
+
+.stepContent {
+  flex-grow: 1;
+}
+
+.stepTitle {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--ifm-color-content);
+  margin: 0 0 0.5rem 0;
+}
+
+.stepDescription {
+  margin: 0;
+  color: var(--ifm-color-content-secondary);
+  line-height: 1.5;
+}
+
+.pathArrow {
+  align-self: center;
+  font-size: 1.5rem;
+  color: var(--ifm-color-content-secondary);
+  margin: 0 0.5rem;
+}
+
+.targetAudience {
+  margin-top: 4rem;
+  padding: 2rem;
+  background-color: var(--ifm-color-emphasis-100);
+  border-radius: var(--ifm-global-radius);
+  border-left: 4px solid var(--ifm-color-primary);
+}
+
+.audienceTitle {
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: var(--ifm-color-content);
+  margin: 0 0 1.5rem 0;
+}
+
+.audienceList {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 1.5rem 0;
+}
+
+.audienceItem {
+  padding: 0.5rem 0;
+  color: var(--ifm-color-content);
+  position: relative;
+  padding-left: 1.5rem;
+}
+
+.audienceItem:before {
+  content: "•";
+  color: var(--ifm-color-primary);
+  font-weight: bold;
+  display: inline-block;
+  width: 1.5rem;
+  margin-left: -1.5rem;
+}
+
+.audienceNote {
+  margin: 0;
+  padding: 1rem;
+  background-color: var(--ifm-color-warning-background);
+  border-left: 3px solid var(--ifm-color-warning-darker);
+  color: var(--ifm-color-warning-contrast-background);
+  font-style: italic;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .learningPathSection {
+    padding: 2rem 0;
+  }
+
+  .sectionTitle {
+    font-size: 1.5rem;
+    margin-bottom: 2rem;
+  }
+
+  .pathContainer {
+    gap: 1rem;
+  }
+
+  .pathStep {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .pathArrow {
+    align-self: flex-start;
+    transform: rotate(90deg);
+    margin: 0.5rem 0;
+  }
+
+  .targetAudience {
+    margin-top: 2rem;
+    padding: 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .pathItem {
+    padding: 1rem;
+  }
+
+  .stepTitle {
+    font-size: 1.1rem;
+  }
+
+  .stepDescription {
+    font-size: 0.9rem;
+  }
+}

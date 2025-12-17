@@ -9,6 +9,11 @@ const config: Config = {
 	tagline:
 		"Explore the future of robotics with our comprehensive course on Physical AI & Humanoid Robotics. Learn how AI systems bridge the digital and physical worlds, enabling humanoid robots to interact naturally in human environments. This book covers ROS 2, Gazebo, Unity, NVIDIA Isaac, and advanced AI integration, providing students and professionals with practical skills for the next generation of robotics.",
 	favicon: "img/favicon.ico",
+	metadata: [
+		{ rel: "icon", href: "img/favicon.ico" },
+		{ rel: "icon", href: "img/favicon.svg", type: "image/svg+xml" },
+		{ rel: "icon", href: "img/favicon.png", type: "image/png" },
+	],
 
 	// Future flags, see https://docusaurus.io/docs/api/docusaurus-config#future
 	future: {
@@ -62,20 +67,25 @@ const config: Config = {
 			respectPrefersColorScheme: true,
 		},
 		navbar: {
-			title: "physical-ai-humanoid-robotics",
+			title: "Physical AI & Humanoid Systems",
 			logo: {
-				alt: "physical-ai-humanoid-robotics Logo",
+				alt: "Physical AI & Humanoid Systems Logo",
 				src: "img/logo.svg",
 			},
 			items: [
 				{
-					type: "docSidebar",
-					sidebarId: "tutorialSidebar",
+					type: "doc",
 					position: "left",
-					label: "Tutorial",
+					label: "Docs",
+					docId: "/category/introduction",
 				},
 				{
-					href: "https://github.com/facebook/docusaurus",
+					to: "/docs/category/introduction",
+					position: "left",
+					label: "Book Structure",
+				},
+				{
+					href: "https://github.com/Huzaifa4412/physical-ai-textbook",
 					label: "GitHub",
 					position: "right",
 				},
@@ -85,24 +95,69 @@ const config: Config = {
 			style: "dark",
 			links: [
 				{
-					title: "Docs",
+					title: "Learn",
 					items: [
 						{
-							label: "Start Reading",
-							to: "docs/category/introduction",
+							label: "Introduction",
+							to: "/docs/category/introduction",
+						},
+						{
+							label: "Physical AI Fundamentals",
+							to: "/docs/book-introduction/physical-ai-embodied-intelligence",
+						},
+						{
+							label: "Robot Brain Architecture",
+							to: "/docs/category/the-ai-robot-brain-nvidia-isaac",
+						},
+						{
+							label: "Digital Twins & Simulation",
+							to: "/docs/category/the-digital-twin-gazebo--unity",
+						},
+						{
+							label: "ROS2 Nervous System",
+							to: "/docs/category/the-robotic-nervous-system-ros-2",
 						},
 					],
 				},
 				{
-					title: "Contact",
+					title: "Resources",
 					items: [
+						{
+							label: "Book Structure",
+							to: "/docs/category/introduction",
+						},
+						{
+							label: "GitHub Repository",
+							href: "https://github.com/Huzaifa4412/physical-ai-textbook",
+						},
+						{
+							label: "NVIDIA Isaac Documentation",
+							href: "https://nvidia-isaac-ros.github.io/",
+						},
+						{
+							label: "ROS2 Documentation",
+							href: "https://docs.ros.org/en/humble/",
+						},
+					],
+				},
+				{
+					title: "Community",
+					items: [
+						{
+							label: "GitHub",
+							href: "https://github.com/Huzaifa4412/physical-ai-textbook",
+						},
 						{
 							label: "Discord",
 							href: "https://discordapp.com/invite/docusaurus",
 						},
 						{
-							label: "X",
-							href: "https://x.com/docusaurus",
+							label: "Twitter",
+							href: "https://twitter.com",
+						},
+						{
+							label: "LinkedIn",
+							href: "https://linkedin.com",
 						},
 					],
 				},
@@ -110,17 +165,25 @@ const config: Config = {
 					title: "More",
 					items: [
 						{
-							label: "Website",
+							label: "Author Website",
 							to: "https://huzaifa-mukhtar-official.vercel.app/",
 						},
 						{
-							label: "GitHub",
-							href: "https://github.com/Huzaifa4412/physical-ai-textbook",
+							label: "Docusaurus",
+							href: "https://docusaurus.io",
+						},
+						{
+							label: "Privacy Policy",
+							to: "/privacy",
+						},
+						{
+							label: "Terms of Service",
+							to: "/terms",
 						},
 					],
 				},
 			],
-			copyright: `Copyright © ${new Date().getFullYear()} Huzaifa Mukhtar. Built with Docusaurus.`,
+			copyright: `Copyright © ${new Date().getFullYear()} Huzaifa Mukhtar. Physical AI & Humanoid Systems. Built with Docusaurus.`,
 		},
 		prism: {
 			theme: prismThemes.github,

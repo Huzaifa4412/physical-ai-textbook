@@ -1,0 +1,167 @@
+/* Enhanced Hero Section Styles for Physical AI & Humanoid Systems */
+
+.heroBanner {
+  padding: 6rem 0;
+  position: relative;
+  overflow: hidden;
+  background-color: var(--ifm-color-background);
+  color: var(--ifm-color-content);
+  background: linear-gradient(135deg, var(--ifm-color-background) 0%, var(--ifm-color-emphasis-0) 100%);
+  min-height: 80vh;
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.heroBanner::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background:
+    radial-gradient(circle at 10% 20%, color-mix(in srgb, var(--ifm-color-primary) 15%, transparent) 0%, transparent 20%),
+    radial-gradient(circle at 90% 80%, color-mix(in srgb, var(--ifm-color-primary) 15%, transparent) 0%, transparent 20%);
+  z-index: 0;
+}
+
+@media screen and (max-width: 996px) {
+  .heroBanner {
+    padding: 4rem 0;
+    min-height: auto;
+  }
+}
+
+.heroContent {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  max-width: var(--ifm-max-width);
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+  width: 100%;
+}
+
+.textContent {
+  text-align: center;
+  max-width: 800px;
+  margin: 0 auto;
+  position: relative;
+}
+
+.badge {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  background: linear-gradient(135deg, var(--ifm-color-primary), #2563eb);
+  color: white;
+  border-radius: 2rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.heroTitle {
+  font-size: 3.5rem;
+  font-weight: 700;
+  color: var(--ifm-color-content);
+  margin-bottom: 1rem;
+  line-height: 1.1;
+}
+
+.heroSubtitle {
+  font-size: 1.5rem;
+  color: var(--ifm-color-content-secondary);
+  margin-bottom: 1rem;
+  line-height: 1.4;
+  font-weight: 400;
+}
+
+.heroSupportingText {
+  font-size: 1.1rem;
+  color: var(--ifm-color-content-secondary);
+  margin-bottom: 2rem;
+  line-height: 1.6;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.heroButtons {
+  display: flex;
+  gap: 1.5rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 2rem;
+}
+
+.stats {
+  display: flex;
+  gap: 3rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 2rem;
+}
+
+.statItem {
+  text-align: center;
+}
+
+.statNumber {
+  display: block;
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--ifm-color-primary);
+  margin-bottom: 0.25rem;
+}
+
+.statLabel {
+  font-size: 0.875rem;
+  color: var(--ifm-color-content-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+@media screen and (max-width: 996px) {
+  .textContent {
+    text-align: center;
+  }
+
+  .heroButtons {
+    justify-content: center;
+  }
+
+  .stats {
+    justify-content: center;
+  }
+
+  .heroTitle {
+    font-size: 2.5rem;
+  }
+
+  .heroSubtitle {
+    font-size: 1.2rem;
+  }
+
+  .stats {
+    gap: 1.5rem;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .heroButtons {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .stats {
+    gap: 1rem;
+  }
+
+  .heroTitle {
+    font-size: 2rem;
+  }
+}
