@@ -1,123 +1,162 @@
 import React, { useState, useRef, useEffect } from 'react';
 import './chat-widget.css';
+import { LuBotMessageSquare } from 'react-icons/lu';
+import { motion, AnimatePresence } from 'motion/react';
 
-const API_URL = 'https://api-deployment-vercel-tau.vercel.app/chat'; // Using the API contract specified in the requirements
+const API_URL = 'https://api-deployment-vercel-tau.vercel.app/chat';
 
 const ChatWidget = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [inputMessage, setInputMessage] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+
   const [messages, setMessages] = useState([
-    { sender: 'bot', text: 'Hello! I\'m your Physical AI Assistant. How can I help you understand humanoids, perception, control, and systems?' },
+    {
+      id: crypto.randomUUID(),
+      sender: 'bot',
+      text:
+        "Hello! I'm your Physical AI Assistant. How can I help you understand humanoids, perception, control, and systems?",
+    },
   ]);
 
   const messagesEndRef = useRef(null);
 
+  /* -------------------- AUTO SCROLL -------------------- */
   useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'auto' });
-  }, [messages]);
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+  }, [messages.length, isLoading]);
 
+  /* -------------------- SEND MESSAGE -------------------- */
   const handleSendMessage = async (e) => {
     e.preventDefault();
-    if (!inputMessage.trim()) return;
 
-    const userMessage = { sender: 'user', text: inputMessage.trim() };
-    setMessages((prev) => [...prev, userMessage]);
+    const text = inputMessage.trim();
+    if (!text || isLoading) return;
+
+    setMessages((prev) => [
+      ...prev,
+      { id: crypto.randomUUID(), sender: 'user', text },
+    ]);
+
     setInputMessage('');
+    setIsLoading(true);
 
     try {
       const res = await fetch(API_URL, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          message: userMessage.text,
-          metadata: {
-            userType: 'engineer',
-            context: 'physical-ai-book'
-          }
-        }),
+        body: JSON.stringify({ question: text }),
       });
 
-      if (!res.ok) {
-        throw new Error(`HTTP error! status: ${res.status}`);
-      }
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
 
       const data = await res.json();
-      if (!data || !data.response) {
-        throw new Error('Invalid response format from server');
+
+      if (typeof data?.answer !== 'string') {
+        throw new Error('Invalid API response');
       }
 
-      setMessages((prev) => [...prev, { sender: 'bot', text: data.response }]);
-    } catch (error) {
-      console.error('Chat error:', error);
       setMessages((prev) => [
         ...prev,
         {
+          id: crypto.randomUUID(),
           sender: 'bot',
-          text: 'Error: Could not reach the Physical AI Assistant service. Please try again later.'
+          text: data.answer,
         },
       ]);
+    } catch (err) {
+      console.error(err);
+      setMessages((prev) => [
+        ...prev,
+        {
+          id: crypto.randomUUID(),
+          sender: 'bot',
+          text: 'Error: Unable to reach the AI service.',
+        },
+      ]);
+    } finally {
+      setIsLoading(false);
     }
   };
 
+  /* -------------------- UI -------------------- */
   return (
     <div className="chat-container">
-      {isOpen && (
-        <div className="chat-window" role="dialog" aria-modal="true" aria-labelledby="chat-header-title">
-          {/* Header */}
-          <div className="chat-header">
-            <h3 id="chat-header-title">Physical AI Assistant</h3>
-            <button
-              onClick={() => setIsOpen(false)}
-              aria-label="Close chat"
-              title="Close chat"
-            >
-              ✕
-            </button>
-          </div>
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            id="chat-window"
+            className="chat-window"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="chat-header-title"
+            initial={{ opacity: 0, scale: 0.95, y: 40 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.95, y: 40 }}
+            transition={{ duration: 0.25, ease: 'easeOut' }}
+          >
+            {/* Header */}
+            <div className="chat-header">
+              <h3 id="chat-header-title">Physical AI Assistant</h3>
+              <button onClick={() => setIsOpen(false)}>✕</button>
+            </div>
 
-          {/* Messages */}
-          <div className="chat-body" role="log" aria-live="polite">
-            {messages.map((msg, index) => (
-              <div
-                key={index}
-                className={`message-row ${msg.sender}`}
-                role="listitem"
-              >
-                <div
-                  className={`message-bubble ${msg.sender}`}
-                  aria-label={`${msg.sender === 'bot' ? 'Assistant' : 'You'}: ${msg.text}`}
+            {/* Messages */}
+            <div className="chat-body" role="log" aria-relevant="additions">
+              {messages.map((msg) => (
+                <motion.div
+                  key={msg.id}
+                  className={`message-row ${msg.sender}`}
+                  initial={{ opacity: 0, y: 12 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.2 }}
                 >
-                  {msg.text}
-                </div>
-              </div>
-            ))}
-            <div ref={messagesEndRef} />
-          </div>
+                  <div className={`message-bubble ${msg.sender}`}>
+                    {msg.text}
+                  </div>
+                </motion.div>
+              ))}
 
-          {/* Input */}
-          <form className="chat-input" onSubmit={handleSendMessage} role="form">
-            <input
-              value={inputMessage}
-              onChange={(e) => setInputMessage(e.target.value)}
-              placeholder="Ask about humanoids, perception, control, or systems..."
-              aria-label="Type your question for the Physical AI Assistant"
-              autoComplete="off"
-            />
-            <button type="submit" aria-label="Send message" title="Send message">➤</button>
-          </form>
-        </div>
-      )}
+              {isLoading && (
+                <motion.div
+                  className="message-row bot"
+                  animate={{ opacity: [0.4, 1, 0.4] }}
+                  transition={{ repeat: Infinity, duration: 1.2 }}
+                >
+                  <div className="message-bubble bot">Thinking…</div>
+                </motion.div>
+              )}
 
-      {/* Toggle Button - Floating button in bottom-right corner */}
-      <button
+              <div ref={messagesEndRef} />
+            </div>
+
+            {/* Input */}
+            <form className="chat-input" onSubmit={handleSendMessage}>
+              <input
+                value={inputMessage}
+                onChange={(e) => setInputMessage(e.target.value)}
+                placeholder="Ask about humanoids, perception, control, or systems..."
+                disabled={isLoading}
+              />
+              <button type="submit" disabled={isLoading}>
+                ➤
+              </button>
+            </form>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Toggle Button */}
+      <motion.button
         className="chat-toggle"
-        onClick={() => setIsOpen(!isOpen)}
-        aria-label={isOpen ? "Close Physical AI Assistant" : "Open Physical AI Assistant"}
+        onClick={() => setIsOpen((v) => !v)}
         aria-expanded={isOpen}
         aria-controls="chat-window"
+        whileHover={{ scale: 1.1 }}
+        whileTap={{ scale: 0.95 }}
       >
-        🤖
-      </button>
+        <LuBotMessageSquare />
+      </motion.button>
     </div>
   );
 };

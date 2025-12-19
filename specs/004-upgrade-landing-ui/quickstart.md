@@ -140,3 +140,73 @@
 - **Docusaurus components not rendering**: Verify component exports and import paths
 - **Color variables not working**: Check that custom.css is properly imported in the Docusaurus config
 - **Responsive layout issues**: Test on multiple screen sizes and adjust CSS media queries as needed
+
+# Quickstart: Chatbot API Integration Fix
+
+## Overview
+This guide explains how to fix the chatbot API integration issue where frontend components are not properly communicating with the backend API.
+
+## Problem
+The chatbot is not working properly because:
+1. Frontend sends incorrect request format to backend
+2. Backend expects `question` field but receives `query` or `message` fields
+3. Frontend expects `response` field but backend returns `answer` field
+
+## Solution
+Update the frontend components to match the backend API contract.
+
+## Files to Update
+
+### 1. site/src/theme/ChatWidget.js
+```javascript
+// Change from:
+body: JSON.stringify({
+  query: message,
+  conversation_id: conversationId
+})
+
+// Change to:
+body: JSON.stringify({
+  question: message
+})
+
+// Change response handling from:
+message: data.response
+
+// Change to:
+message: data.answer
+```
+
+### 2. site/src/components/ChatbotWidget/ChatbotWidget.js
+```javascript
+// Change from:
+body: JSON.stringify({
+  message: userMessage.text,
+  metadata: {
+    userType: 'engineer',
+    context: 'physical-ai-book'
+  }
+}),
+
+// Change to:
+body: JSON.stringify({
+  question: userMessage.text
+}),
+
+// Change response handling from:
+setMessages((prev) => [...prev, { sender: 'bot', text: data.response }]);
+
+// Change to:
+setMessages((prev) => [...prev, { sender: 'bot', text: data.answer }]);
+```
+
+## Testing
+1. Make the changes to both files
+2. Test the chat functionality
+3. Verify that messages are properly sent and received
+4. Confirm the chatbot responds as expected
+
+## Verification
+- User messages should be sent to backend with `question` field
+- Backend responses with `answer` field should be properly displayed
+- Chat conversation should flow normally without errors
