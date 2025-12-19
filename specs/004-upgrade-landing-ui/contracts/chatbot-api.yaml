@@ -1,0 +1,80 @@
+# Chatbot API Contract
+
+## Overview
+This document defines the API contract for the Physical AI Textbook chatbot backend.
+
+## Base URL
+`https://api-deployment-vercel-tau.vercel.app`
+
+## Endpoints
+
+### POST /chat
+
+#### Description
+Sends a user query to the AI assistant and receives a response.
+
+#### Request
+
+**Content-Type**: `application/json`
+
+**Body**:
+```json
+{
+  "question": "string (required) - The user's question or query"
+}
+```
+
+**Example**:
+```json
+{
+  "question": "What is Physical AI?"
+}
+```
+
+#### Response
+
+**Success Response (200 OK)**:
+```json
+{
+  "answer": "string - The AI assistant's response to the question",
+  "session_id": "string (optional) - Session identifier for conversation continuity"
+}
+```
+
+**Example**:
+```json
+{
+  "answer": "Physical AI is an approach that integrates artificial intelligence with physical systems...",
+  "session_id": "session-uuid-123"
+}
+```
+
+**Error Response (400 Bad Request)**:
+```json
+{
+  "detail": "string - Error details"
+}
+```
+
+**Error Response (500 Internal Server Error)**:
+```json
+{
+  "detail": "string - Error details"
+}
+```
+
+#### Authentication
+No authentication required for this endpoint.
+
+## Implementation Details
+
+### Backend Implementation
+- **File**: `Backend/agent.py`
+- **Class**: `ChatRequest` (lines 90-92)
+- **Route Handler**: `chat()` function (lines 157-166)
+
+### Frontend Implementation
+- **File**: `site/src/theme/ChatWidget.js`
+- **File**: `site/src/components/ChatbotWidget/ChatbotWidget.js`
+- **Expected Request Format**: `{question: string}`
+- **Expected Response Format**: `{answer: string}`

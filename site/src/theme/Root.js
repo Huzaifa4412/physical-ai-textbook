@@ -1,6 +1,6 @@
 import React, { lazy, Suspense } from 'react';
 
-const ChatbotWidget = lazy(() => import('../components/ChatbotWidget'));
+const ChatbotWidget = lazy(() => import('../components/ChatbotWidget/ChatbotWidget'));
 
 const Root = ({ children }) => {
   return (

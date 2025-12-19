@@ -83,3 +83,62 @@ The landing page content is static and doesn't have state transitions. The UI co
 - Focus state (for accessibility)
 - Loading state (if applicable)
 - Responsive states (desktop, tablet, mobile)
+
+## Chatbot Data Models
+
+### ChatMessage
+Represents a message in the chat conversation
+
+**Fields:**
+- `id`: string/number - Unique identifier for the message
+- `message`: string - The text content of the message
+- `sender`: string - Either "user" or "assistant"
+- `timestamp`: Date - When the message was created
+
+**State Transitions:**
+- Created when user sends a message
+- Updated when assistant responds
+
+### ChatRequest
+Represents the request sent to the backend API
+
+**Fields:**
+- `question`: string - The user's question/query (required)
+- `session_id`: string - Optional session identifier
+
+**Validation:**
+- `question` field is required
+- `question` must not be empty
+
+### ChatResponse
+Represents the response received from the backend API
+
+**Fields:**
+- `answer`: string - The answer from the AI assistant (required)
+- `session_id`: string - Session identifier (optional)
+
+**Validation:**
+- `answer` field is required
+- `answer` must not be empty
+
+## API Contracts
+
+### Request Format
+```json
+{
+  "question": "User's question text"
+}
+```
+
+### Response Format
+```json
+{
+  "answer": "AI's response text"
+}
+```
+
+## Relationships
+
+- One ChatMessage belongs to one ChatSession
+- One ChatSession contains multiple ChatMessages
+- ChatRequest and ChatResponse are part of the API communication cycle

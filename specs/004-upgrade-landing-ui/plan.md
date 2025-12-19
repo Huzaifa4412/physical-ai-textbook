@@ -1,46 +1,59 @@
-# Implementation Plan: [FEATURE]
+# Implementation Plan: Fix Chatbot API Integration
 
-**Branch**: `[###-feature-name]` | **Date**: [DATE] | **Spec**: [link]
-**Input**: Feature specification from `/specs/[###-feature-name]/spec.md`
+**Branch**: `004-upgrade-landing-ui` | **Date**: 2025-12-19 | **Spec**: [link]
+**Input**: Feature specification from `/specs/004-upgrade-landing-ui/spec.md`
 
 **Note**: This template is filled in by the `/sp.plan` command. See `.specify/templates/commands/plan.md` for the execution workflow.
 
 ## Summary
 
-[Extract from feature spec: primary requirement + technical approach from research]
+Fix the chatbot API integration issue where the frontend is sending incorrect request format to the backend API. The backend expects a `question` field but the frontend is sending `query` or `message` fields.
 
 ## Technical Context
 
-<!--
-  ACTION REQUIRED: Replace the content in this section with the technical details
-  for the project. The structure here is presented in advisory capacity to guide
-  the iteration process.
--->
-
-**Language/Version**: [e.g., Python 3.11, Swift 5.9, Rust 1.75 or NEEDS CLARIFICATION]  
-**Primary Dependencies**: [e.g., FastAPI, UIKit, LLVM or NEEDS CLARIFICATION]  
-**Storage**: [if applicable, e.g., PostgreSQL, CoreData, files or N/A]  
-**Testing**: [e.g., pytest, XCTest, cargo test or NEEDS CLARIFICATION]  
-**Target Platform**: [e.g., Linux server, iOS 15+, WASM or NEEDS CLARIFICATION]
-**Project Type**: [single/web/mobile - determines source structure]  
-**Performance Goals**: [domain-specific, e.g., 1000 req/s, 10k lines/sec, 60 fps or NEEDS CLARIFICATION]  
-**Constraints**: [domain-specific, e.g., <200ms p95, <100MB memory, offline-capable or NEEDS CLARIFICATION]  
-**Scale/Scope**: [domain-specific, e.g., 10k users, 1M LOC, 50 screens or NEEDS CLARIFICATION]
+**Language/Version**: JavaScript/React, Python 3.11
+**Primary Dependencies**: FastAPI, React, @chatscope/chat-ui-kit-react
+**Storage**: N/A (API only)
+**Testing**: Manual testing via UI
+**Target Platform**: Web application
+**Project Type**: Web application (frontend + backend API)
+**Performance Goals**: <2s response time for chat queries
+**Constraints**: Must maintain compatibility with deployed backend API
+**Scale/Scope**: Single chatbot feature integration
 
 ## Constitution Check
 
 *GATE: Must pass before Phase 0 research. Re-check after Phase 1 design.*
 
-[Gates determined based on constitution file]
+All changes align with the project constitution, focusing on accuracy and verifiability. The fix addresses the API contract mismatch while maintaining architectural rigor.
+
+## Phase 0: Research Summary
+
+The research phase identified the root cause of the chatbot API integration issue:
+1. API contract mismatch: frontend sending incorrect field names (`query`, `message`) vs backend expectation (`question`)
+2. Response handling issue: frontend expecting `response` field vs backend returning `answer` field
+3. Two frontend components affected: `ChatWidget.js` and `ChatbotWidget.js`
+
+## Phase 1: Design Summary
+
+Completed design artifacts:
+- `research.md` - Root cause analysis and solution approach
+- `chatbot-research.md` - Detailed chatbot-specific research
+- `data-model.md` - Data models for chat messages and API contracts
+- `quickstart.md` - Implementation guide for the fix
+- `contracts/chatbot-api.yaml` - API contract documentation
+
+The design ensures proper request/response format alignment between frontend and backend.
 
 ## Project Structure
 
 ### Documentation (this feature)
 
 ```text
-specs/[###-feature]/
+specs/004-upgrade-landing-ui/
 ├── plan.md              # This file (/sp.plan command output)
 ├── research.md          # Phase 0 output (/sp.plan command)
+├── chatbot-research.md  # Chatbot-specific research
 ├── data-model.md        # Phase 1 output (/sp.plan command)
 ├── quickstart.md        # Phase 1 output (/sp.plan command)
 ├── contracts/           # Phase 1 output (/sp.plan command)
@@ -48,51 +61,23 @@ specs/[###-feature]/
 ```
 
 ### Source Code (repository root)
-<!--
-  ACTION REQUIRED: Replace the placeholder tree below with the concrete layout
-  for this feature. Delete unused options and expand the chosen structure with
-  real paths (e.g., apps/admin, packages/something). The delivered plan must
-  not include Option labels.
--->
 
 ```text
-# [REMOVE IF UNUSED] Option 1: Single project (DEFAULT)
-src/
-├── models/
-├── services/
-├── cli/
-└── lib/
-
-tests/
-├── contract/
-├── integration/
-└── unit/
-
-# [REMOVE IF UNUSED] Option 2: Web application (when "frontend" + "backend" detected)
-backend/
+site/
 ├── src/
-│   ├── models/
-│   ├── services/
-│   └── api/
-└── tests/
+│   ├── theme/
+│   │   └── ChatWidget.js    # Main chat widget component
+│   └── components/
+│       └── ChatbotWidget/
+│           └── ChatbotWidget.js  # Alternative chat widget
+└── src/theme/ChatWidget.css  # Chat widget styles
 
-frontend/
-├── src/
-│   ├── components/
-│   ├── pages/
-│   └── services/
-└── tests/
-
-# [REMOVE IF UNUSED] Option 3: Mobile + API (when "iOS/Android" detected)
-api/
-└── [same as backend above]
-
-ios/ or android/
-└── [platform-specific structure: feature modules, UI flows, platform tests]
+Backend/
+├── agent.py               # Backend API implementation
+└── requirements.txt       # Backend dependencies
 ```
 
-**Structure Decision**: [Document the selected structure and reference the real
-directories captured above]
+**Structure Decision**: Two frontend components (ChatWidget.js and ChatbotWidget.js) need to be updated to match the backend API contract in Backend/agent.py
 
 ## Complexity Tracking
 
@@ -100,5 +85,4 @@ directories captured above]
 
 | Violation | Why Needed | Simpler Alternative Rejected Because |
 |-----------|------------|-------------------------------------|
-| [e.g., 4th project] | [current need] | [why 3 projects insufficient] |
-| [e.g., Repository pattern] | [specific problem] | [why direct DB access insufficient] |
+| [None] | [N/A] | [N/A] |
